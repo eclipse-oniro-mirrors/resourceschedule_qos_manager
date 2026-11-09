@@ -129,6 +129,16 @@ private:
     private:
         ConcurrentTaskClient& concurrentTaskClient_;
     };
+    /**
+     * @brief Get a strong reference to the connected service, connecting it on demand.
+     *
+     * @return Returns nullptr if the service can not be connected.
+     */
+    sptr<IConcurrentTaskService> GetClientService();
+
+    /**
+     * @brief Establish the connection to the service. The caller must hold mutex_.
+     */
     ErrCode TryConnect();
 
     std::mutex mutex_;
