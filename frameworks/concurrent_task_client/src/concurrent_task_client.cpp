@@ -66,29 +66,32 @@ void ConcurrentTaskClient::ReportData(uint32_t resType, int64_t value,
 {
     CONCUR_LOGD("ConcurrentTaskClient::ReportData receive resType = %{public}u, value = %{public}" PRId64 ".",
                   resType, value);
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         return;
     }
-    clientService_->ReportData(resType, value, mapPayload);
+    clientService->ReportData(resType, value, mapPayload);
 }
 
 void ConcurrentTaskClient::ReportSceneInfo(uint32_t type,
                                            const std::unordered_map<std::string, std::string>& mapPayload)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         return;
     }
-    clientService_->ReportSceneInfo(type, mapPayload);
+    clientService->ReportSceneInfo(type, mapPayload);
 }
 
 void ConcurrentTaskClient::QueryInterval(int queryItem, IntervalReply& queryRs)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         CONCUR_LOGE("QueryInterval connnect fail");
         return;
     }
     IpcIntervalReply IpcQueryRs = QueryRsToIpc(queryRs);
-    clientService_->QueryInterval(queryItem, IpcQueryRs);
+    clientService->QueryInterval(queryItem, IpcQueryRs);
     queryRs = IpcToQueryRs(IpcQueryRs);
     return;
 }
@@ -96,7 +99,8 @@ void ConcurrentTaskClient::QueryInterval(int queryItem, IntervalReply& queryRs)
 void ConcurrentTaskClient::QueryDeadline(int queryItem, DeadlineReply& ddlReply,
                                          const std::unordered_map<pid_t, uint32_t>& mapPayload)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         return;
     }
     std::unordered_map<std::string, std::string> payload;
@@ -104,45 +108,62 @@ void ConcurrentTaskClient::QueryDeadline(int queryItem, DeadlineReply& ddlReply,
         payload[std::to_string(it->first)] = std::to_string(it->second);
     }
     const IpcDeadlineReply& IpcDdlReply = DdlReplyToIpc(ddlReply);
-    clientService_->QueryDeadline(queryItem, IpcDdlReply, payload);
+    clientService->QueryDeadline(queryItem, IpcDdlReply, payload);
     return;
 }
 
 void ConcurrentTaskClient::SetAudioDeadline(int queryItem, int tid, int grpId, IntervalReply& queryRs)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         CONCUR_LOGE("SetAudioDeadline connnect fail");
         return;
     }
     IpcIntervalReply IpcQueryRs = QueryRsToIpc(queryRs);
-    clientService_->SetAudioDeadline(queryItem, tid, grpId, IpcQueryRs);
+    clientService->SetAudioDeadline(queryItem, tid, grpId, IpcQueryRs);
     queryRs = IpcToQueryRs(IpcQueryRs);
     return;
 }
 
 void ConcurrentTaskClient::RequestAuth(const std::unordered_map<std::string, std::string>& mapPayload)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         return;
     }
-    clientService_->RequestAuth(mapPayload);
+    clientService->RequestAuth(mapPayload);
     return;
 }
 
 void ConcurrentTaskClient::QueryDeadline(int queryItem, DeadlineReply& ddlReply,
                                          const std::unordered_map<std::string, std::string>& mapPayload)
 {
-    if (TryConnect() != ERR_OK) {
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
         return;
     }
     const IpcDeadlineReply& IpcDdlReply = DdlReplyToIpc(ddlReply);
-    clientService_->QueryDeadline(queryItem, IpcDdlReply, mapPayload);
+    clientService->QueryDeadline(queryItem, IpcDdlReply, mapPayload);
     return;
 }
 
-ErrCode ConcurrentTaskClient::TryConnect()
+sptr<IConcurrentTaskService> ConcurrentTaskClient::GetClientService()
 {
     std::lock_guard<std::mutex> lock(mutex_);
+    if (TryConnect() != ERR_OK) {
+        return nullptr;
+    }
+    /*
+     * Return a strong reference: callers use the proxy after mutex_ is released, while
+     * StopRemoteObject() may reset clientService_ concurrently. Holding the reference also
+     * keeps the proxy alive for the duration of the IPC call.
+     */
+    return clientService_;
+}
+
+// The caller must hold mutex_.
+ErrCode ConcurrentTaskClient::TryConnect()
+{
     if (clientService_) {
         return ERR_OK;
     }
@@ -153,35 +174,50 @@ ErrCode ConcurrentTaskClient::TryConnect()
         return GET_CONCURRENT_TASK_SERVICE_FAILED;
     }
 
-    remoteObject_ = systemManager->GetSystemAbility(CONCURRENT_TASK_SERVICE_ID);
-    if (!remoteObject_) {
+    sptr<IRemoteObject> remoteObject = systemManager->GetSystemAbility(CONCURRENT_TASK_SERVICE_ID);
+    if (!remoteObject) {
         CONCUR_LOGE("ConcurrentTaskClient::Fail to connect concurrent task schedule service.");
         return GET_CONCURRENT_TASK_SERVICE_FAILED;
     }
 
-    clientService_ = iface_cast<IConcurrentTaskService>(remoteObject_);
-    if (!clientService_) {
+    sptr<IConcurrentTaskService> clientService = iface_cast<IConcurrentTaskService>(remoteObject);
+    if (!clientService || !clientService->AsObject()) {
         return GET_CONCURRENT_TASK_SERVICE_FAILED;
-    }
-    try {
-        recipient_ = new ConcurrentTaskDeathRecipient(*this);
-    } catch (const std::bad_alloc& e) {
-        CONCUR_LOGE("ConcurrentTaskClient::New ConcurrentTaskDeathRecipient fail.");
     }
     if (!recipient_) {
+        try {
+            recipient_ = new ConcurrentTaskDeathRecipient(*this);
+        } catch (const std::bad_alloc& e) {
+            CONCUR_LOGE("ConcurrentTaskClient::New ConcurrentTaskDeathRecipient fail.");
+        }
+        if (!recipient_) {
+            return GET_CONCURRENT_TASK_SERVICE_FAILED;
+        }
+    }
+    if (!clientService->AsObject()->AddDeathRecipient(recipient_)) {
+        CONCUR_LOGE("ConcurrentTaskClient::Fail to add death recipient.");
         return GET_CONCURRENT_TASK_SERVICE_FAILED;
     }
-    clientService_->AsObject()->AddDeathRecipient(recipient_);
+    remoteObject_ = remoteObject;
+    clientService_ = clientService;
     CONCUR_LOGD("ConcurrentTaskClient::Connect concurrent task service success.");
     return ERR_OK;
 }
 
 void ConcurrentTaskClient::StopRemoteObject()
 {
-    if (clientService_ && clientService_->AsObject()) {
+    /*
+     * Serialize with GetClientService(): clientService_ and recipient_ are accessed from
+     * caller threads as well as from the IPC death notification thread. The recipient is
+     * created only once and kept alive by this member, so it can not be freed under the
+     * feet of a concurrent RemoveDeathRecipient().
+     */
+    std::lock_guard<std::mutex> lock(mutex_);
+    if (clientService_ && clientService_->AsObject() && recipient_) {
         clientService_->AsObject()->RemoveDeathRecipient(recipient_);
     }
     clientService_ = nullptr;
+    remoteObject_ = nullptr;
 }
 
 int ConcurrentTaskClient::SetSystemQoS([[maybe_unused]] int tid, [[maybe_unused]] int level)
