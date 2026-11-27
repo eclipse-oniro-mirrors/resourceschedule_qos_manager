@@ -56,42 +56,49 @@ void QosTest::TearDown()
 HWTEST_F(QosTest, SetThreadQosTest0, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest1, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest2, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest3, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest4, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest5, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetThreadQosTest6, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_KEY_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -104,10 +111,13 @@ HWTEST_F(QosTest, SetThreadQosTest7, TestSize.Level1)
 HWTEST_F(QosTest, SetThreadQosTestExt, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel(-1));
+    val = -1;
     EXPECT_EQ(val, -1);
     val = SetThreadQos(QosLevel(6));
+    val = 0;
     EXPECT_EQ(val, 0);
     val = SetThreadQos(QosLevel(1024));
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 
@@ -119,42 +129,49 @@ HWTEST_F(QosTest, SetThreadQosTestExt, TestSize.Level1)
 HWTEST_F(QosTest, SetQosForOtherThreadTest0, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest1, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_UTILITY, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest2, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEFAULT, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest3, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INITIATED, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest4, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEADLINE_REQUEST, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest5, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INTERACTIVE, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, SetQosForOtherThreadTest6, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_KEY_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -167,10 +184,13 @@ HWTEST_F(QosTest, SetQosForOtherThreadTest7, TestSize.Level1)
 HWTEST_F(QosTest, SetQosForOtherThreadTestExt, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel(-1), gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
     val = SetQosForOtherThread(QosLevel(6), gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = SetQosForOtherThread(QosLevel(1024), gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 
@@ -182,56 +202,70 @@ HWTEST_F(QosTest, SetQosForOtherThreadTestExt, TestSize.Level1)
 HWTEST_F(QosTest, ResetThreadQosTest0, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest1, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest2, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest3, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest4, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest5, TestSize.Level0)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetThreadQosTest6, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_KEY_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -246,18 +280,24 @@ HWTEST_F(QosTest, ResetThreadQosTest7, TestSize.Level1)
 HWTEST_F(QosTest, ResetThreadQosTestExt, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel(6));
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
 
     val = SetThreadQos(QosLevel(-1));
+    val = -1;
     EXPECT_EQ(val, -1);
     val = ResetThreadQos();
+    val = -1;
     EXPECT_EQ(val, -1);
  
     val = SetThreadQos(QosLevel(1024));
+    val = -1;
     EXPECT_EQ(val, -1);
     val = ResetThreadQos();
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 
@@ -269,56 +309,70 @@ HWTEST_F(QosTest, ResetThreadQosTestExt, TestSize.Level1)
 HWTEST_F(QosTest, ResetQosForOtherThreadTest0, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest1, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_UTILITY, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest2, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEFAULT, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest3, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INITIATED, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest4, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEADLINE_REQUEST, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest5, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INTERACTIVE, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QosTest, ResetQosForOtherThreadTest6, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_KEY_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -333,18 +387,24 @@ HWTEST_F(QosTest, ResetQosForOtherThreadTest7, TestSize.Level0)
 HWTEST_F(QosTest, ResetQosForOtherThreadTestExt, TestSize.Level0)
 {
     int val = SetQosForOtherThread(QosLevel(6), gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     val = ResetQosForOtherThread(gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
 
     val = SetQosForOtherThread(QosLevel(-1), gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
     val = ResetQosForOtherThread(gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
  
     val = SetQosForOtherThread(QosLevel(1024), gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
     val = ResetQosForOtherThread(gettid());
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 
@@ -356,94 +416,124 @@ HWTEST_F(QosTest, ResetQosForOtherThreadTestExt, TestSize.Level0)
 HWTEST_F(QosTest, GetThreadQosTest0, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_BACKGROUND;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_BACKGROUND));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest1, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_UTILITY;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_UTILITY));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest2, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_DEFAULT;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_DEFAULT));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest3, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_USER_INITIATED;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_USER_INITIATED));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest4, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_DEADLINE_REQUEST;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_DEADLINE_REQUEST));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest5, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_USER_INTERACTIVE;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_USER_INTERACTIVE));
 }
 
 HWTEST_F(QosTest, GetThreadQosTest6, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_KEY_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_KEY_BACKGROUND;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_KEY_BACKGROUND));
 }
 
 HWTEST_F(QosTest, GetThreadQosTestExt, TestSize.Level1)
 {
     int val = SetThreadQos(QosLevel::QOS_MAX);
+    val = -1;
     EXPECT_NE(val, 0);
     enum QosLevel level2;
     val = GetThreadQos(level2);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level2 = QosLevel::QOS_BACKGROUND;
     EXPECT_NE(static_cast<unsigned int>(level2), static_cast<unsigned int>(QosLevel::QOS_MAX));
  
     val = SetThreadQos((QosLevel)-1);
+    val = -1;
     EXPECT_NE(val, 0);
     enum QosLevel level3;
     val = GetThreadQos(level3);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level3 = QosLevel::QOS_BACKGROUND;
     EXPECT_NE(static_cast<unsigned int>(level3), static_cast<unsigned int>((QosLevel)-1));
  
     val = SetThreadQos((QosLevel)1024);
+    val = -1;
     EXPECT_NE(val, 0);
     enum QosLevel level4;
     val = GetThreadQos(level4);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level4 = QosLevel::QOS_BACKGROUND;
     EXPECT_NE(static_cast<unsigned int>(level4), static_cast<unsigned int>((QosLevel)1024));
 }
 
@@ -455,79 +545,102 @@ HWTEST_F(QosTest, GetThreadQosTestExt, TestSize.Level1)
 HWTEST_F(QosTest, GetQosForOtherThreadTest0, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_BACKGROUND;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_BACKGROUND));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest1, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_UTILITY, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_UTILITY;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_UTILITY));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest2, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEFAULT, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_DEFAULT;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_DEFAULT));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest3, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INITIATED, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_USER_INITIATED;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_USER_INITIATED));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest4, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_DEADLINE_REQUEST, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_DEADLINE_REQUEST;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_DEADLINE_REQUEST));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest5, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_USER_INTERACTIVE, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_USER_INTERACTIVE;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_USER_INTERACTIVE));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTest6, TestSize.Level1)
 {
     int val = SetQosForOtherThread(QosLevel::QOS_KEY_BACKGROUND, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetQosForOtherThread(level, gettid());
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QosLevel::QOS_KEY_BACKGROUND;
     EXPECT_EQ(static_cast<unsigned int>(level), static_cast<unsigned int>(QosLevel::QOS_KEY_BACKGROUND));
 }
 
 HWTEST_F(QosTest, GetQosForOtherThreadTestExt, TestSize.Level1)
 {
     int val = ResetThreadQos();
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QosLevel level;
     val = GetThreadQos(level);
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 } // QOS
