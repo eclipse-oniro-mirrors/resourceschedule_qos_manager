@@ -15,6 +15,7 @@
 
 #include "gtest/gtest.h"
 #include "concurrent_task_client.h"
+#include "concurrent_task_errors.h"
 
 namespace OHOS {
 namespace FFRT_TEST {
@@ -156,6 +157,63 @@ HWTEST_F(ConcurrentTaskClientTest, RequestAuthTest, TestSize.Level1)
     payload["pid"] = "12345";
     ConcurrentTaskClient::GetInstance().RequestAuth(payload);
     EXPECT_FALSE(payload.empty());
+}
+
+/**
+ * @tc.name: CreateSessionByTaskTest
+ * @tc.desc: Test whether the CreateSessionByTask interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskClientTest, CreateSessionByTaskTest, TestSize.Level1)
+{
+    int sessionID = ConcurrentTaskClient::GetInstance().CreateSessionByTask();
+    // The service side is a placeholder which reports an invalid session id, or the call
+    // fails with GET_CONCURRENT_TASK_SERVICE_FAILED when the service is unavailable.
+    EXPECT_TRUE(sessionID == -1 || sessionID == GET_CONCURRENT_TASK_SERVICE_FAILED);
+}
+
+/**
+ * @tc.name: SetSessionTaskPriorityTest
+ * @tc.desc: Test whether the SetSessionTaskPriority interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskClientTest, SetSessionTaskPriorityTest, TestSize.Level1)
+{
+    int ret = ConcurrentTaskClient::GetInstance().SetSessionTaskPriority(1, 1);
+    EXPECT_TRUE(ret == 0 || ret == GET_CONCURRENT_TASK_SERVICE_FAILED);
+}
+
+/**
+ * @tc.name: AddProcessToSessionTest
+ * @tc.desc: Test whether the AddProcessToSession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskClientTest, AddProcessToSessionTest, TestSize.Level1)
+{
+    int ret = ConcurrentTaskClient::GetInstance().AddProcessToSession(1, gettid());
+    EXPECT_TRUE(ret == 0 || ret == GET_CONCURRENT_TASK_SERVICE_FAILED);
+}
+
+/**
+ * @tc.name: RemoveProcessFromSessionTest
+ * @tc.desc: Test whether the RemoveProcessFromSession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskClientTest, RemoveProcessFromSessionTest, TestSize.Level1)
+{
+    int ret = ConcurrentTaskClient::GetInstance().RemoveProcessFromSession(gettid());
+    EXPECT_TRUE(ret == 0 || ret == GET_CONCURRENT_TASK_SERVICE_FAILED);
+}
+
+/**
+ * @tc.name: DestroySessionTest
+ * @tc.desc: Test whether the DestroySession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskClientTest, DestroySessionTest, TestSize.Level1)
+{
+    int ret = ConcurrentTaskClient::GetInstance().DestroySession(1);
+    EXPECT_TRUE(ret == 0 || ret == GET_CONCURRENT_TASK_SERVICE_FAILED);
 }
 }
 }

@@ -64,6 +64,58 @@ ErrCode ConcurrentTaskService::RequestAuth(const std::unordered_map<std::string,
     return ERR_OK;
 }
 
+ErrCode ConcurrentTaskService::CreateSessionByTask(int32_t& funcResult)
+{
+    /*
+     * Session management is not supported yet. Keep the interface as a placeholder so that
+     * external callers can link against it; report an invalid session id for now.
+     */
+    funcResult = -1;
+    return ERR_OK;
+}
+
+ErrCode ConcurrentTaskService::SetSessionTaskPriority([[maybe_unused]] int32_t sessionID,
+    [[maybe_unused]] int32_t priority, int32_t& funcResult)
+{
+    /*
+     * Session management is not supported yet. Keep the interface as a placeholder so that
+     * external callers can link against it; report success for now.
+     */
+    funcResult = 0;
+    return ERR_OK;
+}
+
+ErrCode ConcurrentTaskService::AddProcessToSession([[maybe_unused]] int32_t sessionID,
+    [[maybe_unused]] int32_t pid, int32_t& funcResult)
+{
+    /*
+     * Session management is not supported yet. Keep the interface as a placeholder so that
+     * external callers can link against it; report success for now.
+     */
+    funcResult = 0;
+    return ERR_OK;
+}
+
+ErrCode ConcurrentTaskService::RemoveProcessFromSession([[maybe_unused]] int32_t pid, int32_t& funcResult)
+{
+    /*
+     * Session management is not supported yet. Keep the interface as a placeholder so that
+     * external callers can link against it; report success for now.
+     */
+    funcResult = 0;
+    return ERR_OK;
+}
+
+ErrCode ConcurrentTaskService::DestroySession([[maybe_unused]] int32_t sessionID, int32_t& funcResult)
+{
+    /*
+     * Session management is not supported yet. Keep the interface as a placeholder so that
+     * external callers can link against it; report success for now.
+     */
+    funcResult = 0;
+    return ERR_OK;
+}
+
 IntervalReply ConcurrentTaskService::IpcToQueryRs(const IpcIntervalReply& IpcQueryRs)
 {
     IntervalReply queryRs;

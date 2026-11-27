@@ -15,6 +15,7 @@
 
 #include "gtest/gtest.h"
 #include "concurrent_task_service.h"
+#include "errors.h"
 
 namespace OHOS {
 namespace FFRT_TEST {
@@ -173,6 +174,76 @@ HWTEST_F(ConcurrentTaskServiceTest, SetAudioDeadlineTest, TestSize.Level1)
     queryItem = AUDIO_DDL_DESTROY_GRP;
     queInt.SetAudioDeadline(queryItem, -1, IpcQueryRs.rtgId, IpcQueryRs);
     EXPECT_EQ(IpcQueryRs.paramA, 0);
+}
+
+/**
+ * @tc.name: CreateSessionByTaskTest
+ * @tc.desc: Test whether the CreateSessionByTask interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskServiceTest, CreateSessionByTaskTest, TestSize.Level1)
+{
+    ConcurrentTaskService service;
+    int32_t funcResult = 0;
+    ErrCode ret = service.CreateSessionByTask(funcResult);
+    EXPECT_EQ(ret, ERR_OK);
+    EXPECT_EQ(funcResult, -1);
+}
+
+/**
+ * @tc.name: SetSessionTaskPriorityTest
+ * @tc.desc: Test whether the SetSessionTaskPriority interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskServiceTest, SetSessionTaskPriorityTest, TestSize.Level1)
+{
+    ConcurrentTaskService service;
+    int32_t funcResult = -1;
+    ErrCode ret = service.SetSessionTaskPriority(1, 1, funcResult);
+    EXPECT_EQ(ret, ERR_OK);
+    EXPECT_EQ(funcResult, 0);
+}
+
+/**
+ * @tc.name: AddProcessToSessionTest
+ * @tc.desc: Test whether the AddProcessToSession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskServiceTest, AddProcessToSessionTest, TestSize.Level1)
+{
+    ConcurrentTaskService service;
+    int32_t funcResult = -1;
+    ErrCode ret = service.AddProcessToSession(1, 1234, funcResult);
+    EXPECT_EQ(ret, ERR_OK);
+    EXPECT_EQ(funcResult, 0);
+}
+
+/**
+ * @tc.name: RemoveProcessFromSessionTest
+ * @tc.desc: Test whether the RemoveProcessFromSession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskServiceTest, RemoveProcessFromSessionTest, TestSize.Level1)
+{
+    ConcurrentTaskService service;
+    int32_t funcResult = -1;
+    ErrCode ret = service.RemoveProcessFromSession(1234, funcResult);
+    EXPECT_EQ(ret, ERR_OK);
+    EXPECT_EQ(funcResult, 0);
+}
+
+/**
+ * @tc.name: DestroySessionTest
+ * @tc.desc: Test whether the DestroySession interface are normal.
+ * @tc.type: FUNC
+ */
+HWTEST_F(ConcurrentTaskServiceTest, DestroySessionTest, TestSize.Level1)
+{
+    ConcurrentTaskService service;
+    int32_t funcResult = -1;
+    ErrCode ret = service.DestroySession(1, funcResult);
+    EXPECT_EQ(ret, ERR_OK);
+    EXPECT_EQ(funcResult, 0);
 }
 
 }  // namespace FFRT_TEST
