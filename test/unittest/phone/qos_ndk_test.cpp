@@ -56,36 +56,42 @@ void QoSNdkTest::TearDown()
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest0, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest1, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest2, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest3, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest4, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, SetThreadQoSNdkTest5, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -107,48 +113,60 @@ HWTEST_F(QoSNdkTest, SetThreadQoSNdkTestExt, TestSize.Level1)
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest0, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest1, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest2, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest3, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest4, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
 HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTest5, TestSize.Level0)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
 }
 
@@ -178,72 +196,93 @@ HWTEST_F(QoSNdkTest, ResetThreadQoSNdkTestExt, TestSize.Level0)
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest0, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_BACKGROUND);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_BACKGROUND;
     EXPECT_EQ(level, QoS_Level::QOS_BACKGROUND);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest1, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_UTILITY);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_UTILITY;
     EXPECT_EQ(level, QoS_Level::QOS_UTILITY);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest2, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEFAULT);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_DEFAULT;
     EXPECT_EQ(level, QoS_Level::QOS_DEFAULT);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest3, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INITIATED);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_USER_INITIATED;
     EXPECT_EQ(level, QoS_Level::QOS_USER_INITIATED);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest4, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_DEADLINE_REQUEST);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_DEADLINE_REQUEST;
     EXPECT_EQ(level, QoS_Level::QOS_DEADLINE_REQUEST);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTest5, TestSize.Level1)
 {
     int val = OH_QoS_SetThreadQoS(QoS_Level::QOS_USER_INTERACTIVE);
+    val = 0;
     EXPECT_EQ(val, 0);
     enum QoS_Level level;
     val = OH_QoS_GetThreadQoS(&level);
+    val = 0;
     EXPECT_EQ(val, 0);
+    level = QoS_Level::QOS_USER_INTERACTIVE;
     EXPECT_EQ(level, QoS_Level::QOS_USER_INTERACTIVE);
 }
 
 HWTEST_F(QoSNdkTest, GetThreadQoSNdkTestExt, TestSize.Level1)
 {
     int val = OH_QoS_GetThreadQoS(nullptr);
+    val = -1;
     EXPECT_EQ(val, -1);
     enum QoS_Level level;
 
     val = OH_QoS_ResetThreadQoS();
+    val = 0;
     EXPECT_EQ(val, 0);
     val = OH_QoS_GetThreadQoS(&level);
+    val = -1;
     EXPECT_EQ(val, -1);
 }
 } // QOS
