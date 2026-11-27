@@ -183,6 +183,116 @@ bool FuzzConcurrentTaskServiceRequestAuth(const uint8_t* data, size_t size)
     return true;
 }
 
+bool FuzzConcurrentTaskServiceCreateSessionByTask(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        MessageParcel data1;
+        Parcel parcel;
+        sptr<IRemoteObject> iremoteobject = IRemoteObject::Unmarshalling(parcel);
+        int intdata = fdp.ConsumeIntegral<int>();
+        void *voiddata = &intdata;
+        size_t size1 = sizeof(int);
+        data1.WriteRemoteObject(iremoteobject);
+        data1.WriteRawData(voiddata, size1);
+        data1.ReadRawData(size1);
+        MessageParcel reply;
+        MessageOption option;
+        uint32_t code = static_cast<uint32_t>(IConcurrentTaskServiceIpcCode::COMMAND_CREATE_SESSION_BY_TASK);
+        ConcurrentTaskService s = ConcurrentTaskService();
+        s.OnRemoteRequest(code, data1, reply, option);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskServiceSetSessionTaskPriority(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int) + sizeof(int)) {
+        MessageParcel data1;
+        Parcel parcel;
+        sptr<IRemoteObject> iremoteobject = IRemoteObject::Unmarshalling(parcel);
+        int intdata = fdp.ConsumeIntegral<int>();
+        void *voiddata = &intdata;
+        size_t size1 = sizeof(int);
+        data1.WriteRemoteObject(iremoteobject);
+        data1.WriteRawData(voiddata, size1);
+        data1.ReadRawData(size1);
+        MessageParcel reply;
+        MessageOption option;
+        uint32_t code = static_cast<uint32_t>(IConcurrentTaskServiceIpcCode::COMMAND_SET_SESSION_TASK_PRIORITY);
+        ConcurrentTaskService s = ConcurrentTaskService();
+        s.OnRemoteRequest(code, data1, reply, option);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskServiceAddProcessToSession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int) + sizeof(int)) {
+        MessageParcel data1;
+        Parcel parcel;
+        sptr<IRemoteObject> iremoteobject = IRemoteObject::Unmarshalling(parcel);
+        int intdata = fdp.ConsumeIntegral<int>();
+        void *voiddata = &intdata;
+        size_t size1 = sizeof(int);
+        data1.WriteRemoteObject(iremoteobject);
+        data1.WriteRawData(voiddata, size1);
+        data1.ReadRawData(size1);
+        MessageParcel reply;
+        MessageOption option;
+        uint32_t code = static_cast<uint32_t>(IConcurrentTaskServiceIpcCode::COMMAND_ADD_PROCESS_TO_SESSION);
+        ConcurrentTaskService s = ConcurrentTaskService();
+        s.OnRemoteRequest(code, data1, reply, option);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskServiceRemoveProcessFromSession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        MessageParcel data1;
+        Parcel parcel;
+        sptr<IRemoteObject> iremoteobject = IRemoteObject::Unmarshalling(parcel);
+        int intdata = fdp.ConsumeIntegral<int>();
+        void *voiddata = &intdata;
+        size_t size1 = sizeof(int);
+        data1.WriteRemoteObject(iremoteobject);
+        data1.WriteRawData(voiddata, size1);
+        data1.ReadRawData(size1);
+        MessageParcel reply;
+        MessageOption option;
+        uint32_t code = static_cast<uint32_t>(IConcurrentTaskServiceIpcCode::COMMAND_REMOVE_PROCESS_FROM_SESSION);
+        ConcurrentTaskService s = ConcurrentTaskService();
+        s.OnRemoteRequest(code, data1, reply, option);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskServiceDestroySession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        MessageParcel data1;
+        Parcel parcel;
+        sptr<IRemoteObject> iremoteobject = IRemoteObject::Unmarshalling(parcel);
+        int intdata = fdp.ConsumeIntegral<int>();
+        void *voiddata = &intdata;
+        size_t size1 = sizeof(int);
+        data1.WriteRemoteObject(iremoteobject);
+        data1.WriteRawData(voiddata, size1);
+        data1.ReadRawData(size1);
+        MessageParcel reply;
+        MessageOption option;
+        uint32_t code = static_cast<uint32_t>(IConcurrentTaskServiceIpcCode::COMMAND_DESTROY_SESSION);
+        ConcurrentTaskService s = ConcurrentTaskService();
+        s.OnRemoteRequest(code, data1, reply, option);
+    }
+    return true;
+}
+
 bool FuzzConcurrentTaskServiceSetThreadQos(const uint8_t* data, size_t size)
 {
     FuzzedDataProvider fdp(data, size);
@@ -426,6 +536,57 @@ bool FuzzConcurrentTaskClinetRequestAuth(const uint8_t* data, size_t size)
     return true;
 }
 
+bool FuzzConcurrentTaskClientCreateSessionByTask(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        ConcurrentTaskClient::GetInstance().CreateSessionByTask();
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskClientSetSessionTaskPriority(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int) + sizeof(int)) {
+        int sessionID = fdp.ConsumeIntegral<int>();
+        int priority = fdp.ConsumeIntegral<int>();
+        ConcurrentTaskClient::GetInstance().SetSessionTaskPriority(sessionID, priority);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskClientAddProcessToSession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int) + sizeof(int)) {
+        int sessionID = fdp.ConsumeIntegral<int>();
+        int pid = fdp.ConsumeIntegral<int>();
+        ConcurrentTaskClient::GetInstance().AddProcessToSession(sessionID, pid);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskClientRemoveProcessFromSession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        int pid = fdp.ConsumeIntegral<int>();
+        ConcurrentTaskClient::GetInstance().RemoveProcessFromSession(pid);
+    }
+    return true;
+}
+
+bool FuzzConcurrentTaskClientDestroySession(const uint8_t* data, size_t size)
+{
+    FuzzedDataProvider fdp(data, size);
+    if (size > sizeof(int)) {
+        int sessionID = fdp.ConsumeIntegral<int>();
+        ConcurrentTaskClient::GetInstance().DestroySession(sessionID);
+    }
+    return true;
+}
+
 bool FuzzConcurrentTaskClientStopRemoteObject(const uint8_t* data, size_t size)
 {
     FuzzedDataProvider fdp(data, size);
@@ -608,6 +769,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     OHOS::FuzzConcurrentTaskServiceQueryInterval(data, size);
     OHOS::FuzzConcurrentTaskServiceSetAudioDeadline(data, size);
     OHOS::FuzzConcurrentTaskServiceRequestAuth(data, size);
+    OHOS::FuzzConcurrentTaskServiceCreateSessionByTask(data, size);
+    OHOS::FuzzConcurrentTaskServiceSetSessionTaskPriority(data, size);
+    OHOS::FuzzConcurrentTaskServiceAddProcessToSession(data, size);
+    OHOS::FuzzConcurrentTaskServiceRemoveProcessFromSession(data, size);
+    OHOS::FuzzConcurrentTaskServiceDestroySession(data, size);
 
     OHOS::FuzzConcurrentTaskServiceSetThreadQos(data, size);
     OHOS::FuzzConcurrentTaskServiceSetQosForOtherThread(data, size);
@@ -628,6 +794,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     OHOS::FuzzConcurrentTaskClientQueryInterval(data, size);
     OHOS::FuzzConcurrentTaskClientSetAudioDeadline(data, size);
     OHOS::FuzzConcurrentTaskClinetRequestAuth(data, size);
+    OHOS::FuzzConcurrentTaskClientCreateSessionByTask(data, size);
+    OHOS::FuzzConcurrentTaskClientSetSessionTaskPriority(data, size);
+    OHOS::FuzzConcurrentTaskClientAddProcessToSession(data, size);
+    OHOS::FuzzConcurrentTaskClientRemoveProcessFromSession(data, size);
+    OHOS::FuzzConcurrentTaskClientDestroySession(data, size);
     OHOS::FuzzConcurrentTaskClientStopRemoteObject(data, size);
 
     OHOS::FuzzConcurrentTaskServiceAbilityOnStop(data, size);

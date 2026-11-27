@@ -36,6 +36,11 @@ public:
                           const std::unordered_map<std::string, std::string>& payload) override;
     ErrCode SetAudioDeadline(int queryItem, int tid, int grpId, IpcIntervalReply& IpcQueryRs) override;
     ErrCode RequestAuth(const std::unordered_map<std::string, std::string>& payload) override;
+    ErrCode CreateSessionByTask(int32_t& funcResult) override;
+    ErrCode SetSessionTaskPriority(int32_t sessionID, int32_t priority, int32_t& funcResult) override;
+    ErrCode AddProcessToSession(int32_t sessionID, int32_t pid, int32_t& funcResult) override;
+    ErrCode RemoveProcessFromSession(int32_t pid, int32_t& funcResult) override;
+    ErrCode DestroySession(int32_t sessionID, int32_t& funcResult) override;
 
     IntervalReply IpcToQueryRs(const IpcIntervalReply& IpcQueryRs);
     IpcIntervalReply QueryRsToIpc(const IntervalReply& queryRs);

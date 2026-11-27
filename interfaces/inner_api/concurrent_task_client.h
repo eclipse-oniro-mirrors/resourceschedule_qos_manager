@@ -101,6 +101,47 @@ public:
     void RequestAuth(const std::unordered_map<std::string, std::string>& mapPayload);
 
     /**
+     * @brief Create a session for the current task through inter-process communication.
+     *
+     * @return Returns the id of the session if success, returns -1 otherwise.
+     */
+    int CreateSessionByTask();
+
+    /**
+     * @brief Set the priority of the specified session through inter-process communication.
+     *
+     * @param sessionID Indicates the id of the session.
+     * @param priority Indicates the priority of the session want to set.
+     * @return Returns 0 if success, returns a non-zero value otherwise.
+     */
+    int SetSessionTaskPriority(int sessionID, int priority);
+
+    /**
+     * @brief Add a process to the specified session through inter-process communication.
+     *
+     * @param sessionID Indicates the id of the session.
+     * @param pid Indicates the id of the process which will be added to the session.
+     * @return Returns 0 if success, returns a non-zero value otherwise.
+     */
+    int AddProcessToSession(int sessionID, int pid);
+
+    /**
+     * @brief Remove a process from the session it belongs to through inter-process communication.
+     *
+     * @param pid Indicates the id of the process which will be removed from the session.
+     * @return Returns 0 if success, returns a non-zero value otherwise.
+     */
+    int RemoveProcessFromSession(int pid);
+
+    /**
+     * @brief Destroy the specified session through inter-process communication.
+     *
+     * @param sessionID Indicates the id of the session.
+     * @return Returns 0 if success, returns a non-zero value otherwise.
+     */
+    int DestroySession(int sessionID);
+
+    /**
      * @brief Stop remote object and reset ConcurrentTaskClient.
      */
     void StopRemoteObject();

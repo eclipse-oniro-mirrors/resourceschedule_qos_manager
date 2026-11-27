@@ -135,6 +135,86 @@ void ConcurrentTaskClient::RequestAuth(const std::unordered_map<std::string, std
     return;
 }
 
+int ConcurrentTaskClient::CreateSessionByTask()
+{
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
+        CONCUR_LOGE("CreateSessionByTask connect fail");
+        return GET_CONCURRENT_TASK_SERVICE_FAILED;
+    }
+    int32_t funcResult = 0;
+    ErrCode errCode = clientService->CreateSessionByTask(funcResult);
+    if (errCode != ERR_OK) {
+        CONCUR_LOGE("CreateSessionByTask remote call fail, errCode = %{public}d", errCode);
+        return errCode;
+    }
+    return funcResult;
+}
+
+int ConcurrentTaskClient::SetSessionTaskPriority(int sessionID, int priority)
+{
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
+        CONCUR_LOGE("SetSessionTaskPriority connect fail");
+        return GET_CONCURRENT_TASK_SERVICE_FAILED;
+    }
+    int32_t funcResult = 0;
+    ErrCode errCode = clientService->SetSessionTaskPriority(sessionID, priority, funcResult);
+    if (errCode != ERR_OK) {
+        CONCUR_LOGE("SetSessionTaskPriority remote call fail, errCode = %{public}d", errCode);
+        return errCode;
+    }
+    return funcResult;
+}
+
+int ConcurrentTaskClient::AddProcessToSession(int sessionID, int pid)
+{
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
+        CONCUR_LOGE("AddProcessToSession connect fail");
+        return GET_CONCURRENT_TASK_SERVICE_FAILED;
+    }
+    int32_t funcResult = 0;
+    ErrCode errCode = clientService->AddProcessToSession(sessionID, pid, funcResult);
+    if (errCode != ERR_OK) {
+        CONCUR_LOGE("AddProcessToSession remote call fail, errCode = %{public}d", errCode);
+        return errCode;
+    }
+    return funcResult;
+}
+
+int ConcurrentTaskClient::RemoveProcessFromSession(int pid)
+{
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
+        CONCUR_LOGE("RemoveProcessFromSession connect fail");
+        return GET_CONCURRENT_TASK_SERVICE_FAILED;
+    }
+    int32_t funcResult = 0;
+    ErrCode errCode = clientService->RemoveProcessFromSession(pid, funcResult);
+    if (errCode != ERR_OK) {
+        CONCUR_LOGE("RemoveProcessFromSession remote call fail, errCode = %{public}d", errCode);
+        return errCode;
+    }
+    return funcResult;
+}
+
+int ConcurrentTaskClient::DestroySession(int sessionID)
+{
+    sptr<IConcurrentTaskService> clientService = GetClientService();
+    if (clientService == nullptr) {
+        CONCUR_LOGE("DestroySession connect fail");
+        return GET_CONCURRENT_TASK_SERVICE_FAILED;
+    }
+    int32_t funcResult = 0;
+    ErrCode errCode = clientService->DestroySession(sessionID, funcResult);
+    if (errCode != ERR_OK) {
+        CONCUR_LOGE("DestroySession remote call fail, errCode = %{public}d", errCode);
+        return errCode;
+    }
+    return funcResult;
+}
+
 void ConcurrentTaskClient::QueryDeadline(int queryItem, DeadlineReply& ddlReply,
                                          const std::unordered_map<std::string, std::string>& mapPayload)
 {

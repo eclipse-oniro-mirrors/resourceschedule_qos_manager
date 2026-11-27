@@ -22,4 +22,9 @@
     [oneway] void QueryDeadline([in] int queryItem, [in] IpcDeadlineReply IpcDdlReply, [in] Map<String, String> payload);
     void SetAudioDeadline([in] int queryItem, [in] int tid, [in] int grpId, [inout] IpcIntervalReply queryRs);
     void RequestAuth([in] Map<String, String> payload);
+    int CreateSessionByTask();
+    int SetSessionTaskPriority([in] int sessionID, [in] int priority);
+    int AddProcessToSession([in] int sessionID, [in] int pid);
+    int RemoveProcessFromSession([in] int pid);
+    int DestroySession([in] int sessionID);
  }
